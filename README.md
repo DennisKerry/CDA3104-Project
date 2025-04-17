@@ -1,6 +1,8 @@
 # CDA3104-Project
 Traffic light control system for a single-lane roadway using AVR assembly language
 
+Currently at 40 points
+
 Objective
 Design and implement a traffic light control system for a single-lane roadway using AVR assembly language. The system must include realistic light sequencing (Red → Green → Yellow), respond to a crosswalk button, and manage LED indicators for vehicle and pedestrian traffic. Additional features may be implemented for extra credit.
 
