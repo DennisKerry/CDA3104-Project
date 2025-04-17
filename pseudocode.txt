@@ -1,0 +1,24 @@
+for 35 pts
+
+lane 1 red
+lane 2 red
+
+while true:
+	
+	lane 1 green
+	4 sec
+	
+	lane 1 yellow
+	1 sec
+	
+	lane 1 red          // rn both are red
+	4 sec
+
+	lane 2 green
+	4 sec
+	
+	lane 2 yellow
+	1 sec
+	
+	lane 2 red			// rn both are red
+	4 sec
