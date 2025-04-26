@@ -106,12 +106,12 @@ lane1_cycle:
           clr       btn1Press           ; }
 skip_white1:
           ; lane 1 green
-		  ldi       r17, (1<<GREEN1) | (1<<RED2)
+	ldi       r17, (1<<GREEN1) | (1<<RED2)
           out       PORTB, r17
           ldi       r20, 4              ; wait 4 sec
           call      delay
 	 
-		  ; lane 1 yellow
+	; lane 1 yellow
           ldi       r17, (1<<YELLOW1) | (1<<RED2)           
           out       PORTB, r17
           ldi       r20, 2              ; wait 2 sec
@@ -119,8 +119,8 @@ skip_white1:
 
           cbi       PORTD,WHITE1        ; Turn off WHITE1
 
-		  ; lane 1 red    
-		  ldi       r17, (1<<RED1) | (1<<RED2)           
+	; lane 1 red    
+	ldi       r17, (1<<RED1) | (1<<RED2)           
           out       PORTB, r17
 
 
@@ -141,12 +141,12 @@ lane2_cycle:
           clr       btn2Press           ; }
 skip_white2:
           ; lane 2 green
-		  ldi       r17, (1<<GREEN2) | (1<<RED1)           
+	ldi       r17, (1<<GREEN2) | (1<<RED1)           
           out       PORTB, r17
           ldi       r20, 4              ; wait 4 sec
           call      delay
 	 
-		  ; lane 2 yellow
+	; lane 2 yellow
           ldi       r17, (1<<YELLOW2) | (1<<RED1)           
           out       PORTB, r17
           ldi       r20, 2              ; wait 2 sec
@@ -154,8 +154,8 @@ skip_white2:
 
           cbi       PORTD, WHITE2       ; Turn off WHITE2
 
-		  ; lane 2 red    
-		  ldi       r17, (1<<RED2) | (1<<RED1)           
+	; lane 2 red    
+	ldi       r17, (1<<RED2) | (1<<RED1)           
           out       PORTB, r17
 
           ldi       r20, 1              ; wait 1 sec
