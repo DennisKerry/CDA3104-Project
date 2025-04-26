@@ -27,6 +27,8 @@
 .def      btn1Press = r29
 .def      btn2Press = r30
 
+.def      blinkAmt = r31
+
 
 ; Vector Table
 ; ---------------------------------------------------------
@@ -53,9 +55,12 @@ main:
           clr       btn1Press
           clr       btn2Press
 
+          ldi       blinkAmt, 5
+
           call      gpio_setup
           
-          sei                           ; Enable global interrupts
+          ; Enable global interrupts
+          sei                           
 main_loop:
 
           call      lane1_cycle
@@ -216,3 +221,11 @@ BTN2_ISR:
 ; ---------------------------------------------------------
           ldi       btn2Press, 1
           reti
+
+TMR1_ISR:
+; Toggle the active white LED
+; Parameter r18 - The mask for which white LED to toggle
+; ---------------------------------------------------------
+          in        r16, PORTD
+          // toggle the r18 mask
+          
