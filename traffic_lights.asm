@@ -111,7 +111,7 @@ lane1_cycle:
           sbi       PORTD, WHITE1       ; Turn on WHITE1
 skip_white1:
           ; lane 1 green
-	ldi       r17, (1<<GREEN1) | (1<<RED2)
+          ldi       r17, (1<<GREEN1) | (1<<RED2)
           out       PORTB, r17
 
           ldi       r20, 6              ; wait 3 sec
@@ -137,7 +137,7 @@ skip_white2:
           cbi       PORTD,WHITE1        ; Turn off WHITE1
 
 	; lane 1 red    
-	ldi       r17, (1<<RED1) | (1<<RED2)           
+          ldi       r17, (1<<RED1) | (1<<RED2)           
           out       PORTB, r17
 
 
@@ -157,7 +157,7 @@ lane2_cycle:
           sbi       PORTD, WHITE2       ; Turn on WHITE2
 skip_white3:
           ; lane 2 green
-	ldi       r17, (1<<GREEN2) | (1<<RED1)           
+          ldi       r17, (1<<GREEN2) | (1<<RED1)           
           out       PORTB, r17
 
           ldi       r20, 6              ; wait 3 sec
@@ -182,7 +182,7 @@ skip_white4:
           cbi       PORTD, WHITE2       ; Turn off WHITE2
 
 	; lane 2 red    
-	ldi       r17, (1<<RED2) | (1<<RED1)           
+          ldi       r17, (1<<RED2) | (1<<RED1)           
           out       PORTB, r17
 
           ldi       r20, 2              ; wait 1 sec
