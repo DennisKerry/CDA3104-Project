@@ -15,8 +15,8 @@
 .equ      YELLOW2 = PINB4               ; Lane 2 Yellow LED
 .equ      GREEN2 = PINB5                ; Lane 2 Green LED
 
-.equ      WHITE1 = PINB6                ; Lane 1 White LED
-.equ      WHITE2 = PINB7                ; Lane 2 White LED
+.equ      WHITE1 = PIND6                ; Lane 1 White LED
+.equ      WHITE2 = PIND7                ; Lane 2 White LED
 
 .equ      BTN1 = PIND2                  ; INT0
 .equ      BTN2 = PIND3                  ; INT1
@@ -105,15 +105,27 @@ lane1_cycle:
 ; Handle logic and animation for Lane 1's lights
 ; ---------------------------------------------------------
 
+          ; lane 1 white
           sbrs      btn1Press, 0        ; if (button2 was pressed) {
           rjmp      skip_white1         ;         else skip white led
           sbi       PORTD, WHITE1       ; Turn on WHITE1
-          clr       btn1Press           ; }
 skip_white1:
           ; lane 1 green
 	ldi       r17, (1<<GREEN1) | (1<<RED2)
           out       PORTB, r17
-          ldi       r20, 8              ; wait 4 sec
+
+          ldi       r20, 6              ; wait 3 sec
+          call      delay
+
+          ; lane 1 white
+          sbrs      btn1Press, 0        ; if (button2 was pressed) {
+          rjmp      skip_white2         ;         else skip white led
+          ldi       r18, 1 << WHITE1    ; Set up White LED 1 mask
+          //                            ; Start timer0 for blinking for 3 sec
+          clr       btn1Press           ; }
+
+skip_white2:
+          ldi       r20, 2              ; wait 1 sec
           call      delay
 	 
 	; lane 1 yellow
@@ -139,16 +151,26 @@ lane2_cycle:
 ; Handle logic and animation for Lane 1's lights
 ; ---------------------------------------------------------
 
-
+          ; lane 2 white
           sbrs      btn2Press, 0        ; if (button1 was pressed) {
-          rjmp      skip_white2         ;         else skip white led
+          rjmp      skip_white3         ;         else skip white led
           sbi       PORTD, WHITE2       ; Turn on WHITE2
-          clr       btn2Press           ; }
-skip_white2:
+skip_white3:
           ; lane 2 green
 	ldi       r17, (1<<GREEN2) | (1<<RED1)           
           out       PORTB, r17
-          ldi       r20, 8              ; wait 4 sec
+
+          ldi       r20, 6              ; wait 3 sec
+
+          ; lane 2 white
+          sbrs      btn1Press, 0        ; if (button1 was pressed) {
+          rjmp      skip_white4         ;         else skip white led
+                                        ; set up White LED 2 mask
+          //                            ; Start timer0 for blinking for 3 sec
+          clr       btn2Press           ; }
+
+skip_white4:
+          ldi       r20, 2              ; wait 1 sec
           call      delay
 	 
 	; lane 2 yellow
