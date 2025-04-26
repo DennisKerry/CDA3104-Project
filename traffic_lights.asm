@@ -55,7 +55,7 @@ main:
           clr       btn1Press
           clr       btn2Press
 
-          ldi       blinkAmt, 5
+          ldi       blinkAmt, 6         ; 6 half-seconds of blinking
 
           call      gpio_setup
           
@@ -113,13 +113,13 @@ skip_white1:
           ; lane 1 green
 	ldi       r17, (1<<GREEN1) | (1<<RED2)
           out       PORTB, r17
-          ldi       r20, 4              ; wait 4 sec
+          ldi       r20, 8              ; wait 4 sec
           call      delay
 	 
 	; lane 1 yellow
           ldi       r17, (1<<YELLOW1) | (1<<RED2)           
           out       PORTB, r17
-          ldi       r20, 2              ; wait 2 sec
+          ldi       r20, 4              ; wait 2 sec
           call      delay
 
           cbi       PORTD,WHITE1        ; Turn off WHITE1
@@ -129,7 +129,7 @@ skip_white1:
           out       PORTB, r17
 
 
-          ldi       r20, 1              ; wait 1 sec
+          ldi       r20, 2              ; wait 1 sec
           call      delay
            
           ret                           ; Return lane1_cycle
@@ -148,13 +148,13 @@ skip_white2:
           ; lane 2 green
 	ldi       r17, (1<<GREEN2) | (1<<RED1)           
           out       PORTB, r17
-          ldi       r20, 4              ; wait 4 sec
+          ldi       r20, 8              ; wait 4 sec
           call      delay
 	 
 	; lane 2 yellow
           ldi       r17, (1<<YELLOW2) | (1<<RED1)           
           out       PORTB, r17
-          ldi       r20, 2              ; wait 2 sec
+          ldi       r20, 4              ; wait 2 sec
           call      delay
 
           cbi       PORTD, WHITE2       ; Turn off WHITE2
@@ -163,15 +163,15 @@ skip_white2:
 	ldi       r17, (1<<RED2) | (1<<RED1)           
           out       PORTB, r17
 
-          ldi       r20, 1              ; wait 1 sec
+          ldi       r20, 2              ; wait 1 sec
           call      delay
 
           ret                           ; Return lane2_cycle
 
 
 delay:
-; Uses timer1 to burn a set amount of seconds
-; Parameter r20 - Amount of seconds to wait
+; Uses timer1 to burn a set amount of half seconds
+; Parameter r20 - Amount of half seconds to wait
 ; ---------------------------------------------------------
 one_sec_loop:                           ; Will loop r20 amount of times        
 
@@ -185,9 +185,9 @@ one_sec_loop:                           ; Will loop r20 amount of times
           sts       TCNT1L, r16
 
           ; Load OCR1AH:OCR1AL with stop count
-          ldi       r16, high(62499)              
+          ldi       r16, high(31249)              
           sts       OCR1AH, r16
-          ldi       r16, low(62499)
+          ldi       r16, low(31249)
           sts       OCR1AL, r16
 
           ; Load TCCR1A & TCCR1B, starting timer
@@ -222,10 +222,13 @@ BTN2_ISR:
           ldi       btn2Press, 1
           reti
 
-TMR1_ISR:
+TMR0_ISR:
 ; Toggle the active white LED
 ; Parameter r18 - The mask for which white LED to toggle
 ; ---------------------------------------------------------
           in        r16, PORTD
           // toggle the r18 mask
+          dec       blinkAmt
+          // if blinkAmt:
+          //   restart timer
           

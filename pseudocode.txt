@@ -4,17 +4,17 @@
 // maybe use timer1 interrupts
 
 
-var timer_loops = 5
+var timer_loops = 3
 
-set up timer1
-	.5 sec delay
+set up timer0
+	1 sec delay
 	trigger ISR on overflow
 	
 	
 while true:
 	if button2 was pressed:
 		turn on white led
-		after 5 seconds, start timer1
+		after 4 seconds, start timer0
 	
 	lane 1 green
 	4 sec
@@ -48,7 +48,7 @@ TIMER1_ISR()
 	decrement timer_loops
 	if (timer_loops > 0)
 	{
-		restart timer1
+		restart timer0
 	}
 	else
 	{
