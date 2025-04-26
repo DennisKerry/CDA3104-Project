@@ -1,9 +1,20 @@
-for 35 pts
 
-lane 1 red
-lane 2 red
+	
+// make each white LED blink for second half of cycle
+// maybe use timer1 interrupts
 
+
+var timer_loops = 5
+
+set up timer1
+	.5 sec delay
+	trigger ISR on overflow
+	
+	
 while true:
+	if button2 was pressed:
+		turn on white led
+		after 5 seconds, start timer1
 	
 	lane 1 green
 	4 sec
@@ -11,8 +22,12 @@ while true:
 	lane 1 yellow
 	1 sec
 	
+	turn off white LED 1
 	lane 1 red          // rn both are red
 	4 sec
+
+	if button1 was pressed:
+		turn on white led 2
 
 	lane 2 green
 	4 sec
@@ -20,5 +35,23 @@ while true:
 	lane 2 yellow
 	1 sec
 	
+	turn off white LED 2
 	lane 2 red			// rn both are red
 	4 sec
+	
+
+TIMER1_ISR()
+{
+	create a mask based on which white LED is on
+	toggle the mask
+	
+	decrement timer_loops
+	if (timer_loops > 0)
+	{
+		restart timer1
+	}
+	else
+	{
+		turn off the white LED
+	}
+}
